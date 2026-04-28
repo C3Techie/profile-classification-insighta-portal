@@ -6,8 +6,9 @@ export default function LoginPage() {
   const handleGithubLogin = () => {
     // Standard OAuth redirect to backend
     // The backend handles the state generation and redirect to GitHub
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    window.location.href = `${backendUrl}/auth/github`;
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://profile-classification-api.vercel.app';
+    const callbackUrl = `${window.location.origin}/api/auth/callback`;
+    window.location.href = `${backendUrl}/auth/github?redirect_uri=${encodeURIComponent(callbackUrl)}`;
   };
 
   return (
