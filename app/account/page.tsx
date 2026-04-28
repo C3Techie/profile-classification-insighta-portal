@@ -93,7 +93,7 @@ export default function AccountPage() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold text-gray-400 uppercase">Joined On</p>
-                  <p className="font-bold">{new Date(user?.created_at).toLocaleDateString()}</p>
+                  <p className="font-bold">{user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}</p>
                 </div>
               </div>
 
