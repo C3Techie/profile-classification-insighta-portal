@@ -14,9 +14,13 @@ export async function GET(request: NextRequest) {
   try {
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://profile-classification-api.vercel.app';
     
+    interface TokenResponse {
+      access_token: string;
+      refresh_token: string;
+    }
+
     // 1. Exchange code for tokens via the Backend
-    // We use the JSON callback endpoint (POST)
-    const response = await axios.post(`${backendUrl}/auth/github/callback`, {
+    const response = await axios.post<TokenResponse>(`${backendUrl}/auth/github/callback`, {
       code,
       state,
       redirect_uri: `${new URL(request.url).origin}/api/auth/callback`,
@@ -31,17 +35,17 @@ export async function GET(request: NextRequest) {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
-      max_age: 180, // 3 mins
+      maxAge: 180, // 3 mins
       path: '/',
-    } as any);
+    });
 
     res.cookies.set('insighta_refresh', refresh_token, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
-      max_age: 300, // 5 mins
+      maxAge: 300, // 5 mins
       path: '/',
-    } as any);
+    });
 
     return res;
   } catch (error) {
