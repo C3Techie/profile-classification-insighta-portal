@@ -35,10 +35,20 @@ async function handleRequest(request: NextRequest, path: string, method: string)
         'X-API-Version': request.headers.get('X-API-Version') || '1',
         'Content-Type': 'application/json',
       },
-      validateStatus: () => true, // Don't throw on 401, we want to return the status
+      responseType: 'arraybuffer', // Handle binary/text data
+      validateStatus: () => true,
     });
 
-    return NextResponse.json(response.data, { status: response.status });
+    const contentType = response.headers['content-type'];
+    const contentDisposition = response.headers['content-disposition'];
+
+    return new NextResponse(response.data, {
+      status: response.status,
+      headers: {
+        'Content-Type': contentType || 'application/json',
+        ...(contentDisposition && { 'Content-Disposition': contentDisposition }),
+      },
+    });
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Proxy Error:', errorMessage);
