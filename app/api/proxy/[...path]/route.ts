@@ -36,8 +36,9 @@ async function handleRequest(request: NextRequest, path: string, method: string)
     });
 
     return NextResponse.json(response.data, { status: response.status });
-  } catch (error: any) {
-    console.error('Proxy Error:', error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Proxy Error:', errorMessage);
     return NextResponse.json({ status: 'error', message: 'Proxy failed' }, { status: 500 });
   }
 }
