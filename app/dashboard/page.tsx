@@ -5,8 +5,13 @@ import { api } from '@/lib/api';
 import { Users, ShieldCheck, Globe, Clock, BarChart3, TrendingUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+interface DashboardStats {
+  total: number;
+  lastUpdated: string;
+}
+
 export default function DashboardPage() {
-  const [stats, setStats] = useState<any>(null);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

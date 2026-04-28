@@ -3,12 +3,19 @@
 import { useState } from 'react';
 import { api } from '@/lib/api';
 import { Search as SearchIcon, Loader2, Users, ArrowRight, Globe } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import Link from 'next/link';
+
+interface Profile {
+  id: string;
+  name: string;
+  gender: string;
+  age: number;
+  country_id: string;
+}
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
@@ -34,7 +41,7 @@ export default function SearchPage() {
         <h1 className="text-4xl font-black tracking-tight">Natural Query Engine</h1>
         <p className="text-gray-500 max-w-xl mx-auto">
           Describe the audience you're looking for using plain English.
-          Example: <span className="italic">"young females from nigeria"</span> or <span className="italic">"seniors above 70"</span>.
+          Example: <span className="italic">&quot;young females from nigeria&quot;</span> or <span className="italic">&quot;seniors above 70&quot;</span>.
         </p>
       </div>
 
@@ -105,7 +112,7 @@ export default function SearchPage() {
                  <Globe size={20} />
                </div>
                <h4 className="font-bold text-purple-900">Geographics</h4>
-               <p className="text-xs text-purple-700/70 leading-relaxed">Filter by country or region using natural language like "from Nigeria".</p>
+               <p className="text-xs text-purple-700/70 leading-relaxed">Filter by country or region using natural language like &quot;from Nigeria&quot;.</p>
             </div>
             <div className="p-6 bg-amber-50 rounded-3xl space-y-2">
                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-amber-600 shadow-sm mb-4">

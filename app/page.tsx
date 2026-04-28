@@ -1,7 +1,6 @@
 "use client";
 
 import { Shield, Lock } from 'lucide-react';
-import { api } from '@/lib/api';
 
 export default function LoginPage() {
   const handleGithubLogin = () => {

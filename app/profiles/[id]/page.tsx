@@ -3,13 +3,25 @@
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
-import { ArrowLeft, MapPin, Calendar, Fingerprint, Shield, Zap, Info } from 'lucide-react';
-import Link from 'next/link';
+import { ArrowLeft, Fingerprint, Shield, Zap, Info } from 'lucide-react';
+
+interface ProfileDetail {
+  id: string;
+  name: string;
+  gender: string;
+  gender_probability: number;
+  age: number;
+  age_group: string;
+  country_id: string;
+  country_name: string;
+  country_probability: number;
+  created_at: string;
+}
 
 export default function ProfileDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [profile, setProfile] = useState<any>(null);
+  const [profile, setProfile] = useState<ProfileDetail | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

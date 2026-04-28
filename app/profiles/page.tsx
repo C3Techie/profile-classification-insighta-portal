@@ -2,13 +2,29 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { api } from '@/lib/api';
-import { Filter, ChevronLeft, ChevronRight, Download, Search as SearchIcon, MoreHorizontal } from 'lucide-react';
+import { Filter, ChevronLeft, ChevronRight, Download, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+
+interface Profile {
+  id: string;
+  name: string;
+  gender: string;
+  gender_probability: number;
+  age: number;
+  age_group: string;
+  country_id: string;
+  country_name: string;
+  created_at: string;
+}
+
+interface Pagination {
+  total: number;
+  totalPages: number;
+}
 
 export default function ProfilesPage() {
-  const [profiles, setProfiles] = useState<any[]>([]);
-  const [pagination, setPagination] = useState<any>(null);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -26,9 +42,12 @@ export default function ProfilesPage() {
         ...filters,
       };
       // Clean empty filters
-      Object.keys(params).forEach(key => (params as any)[key] === '' && delete (params as any)[key]);
+      const cleanParams: Record<string, string | number> = {};
+      Object.entries(params).forEach(([key, val]) => {
+        if (val !== '') cleanParams[key] = val;
+      });
       
-      const resp = await api.get('/api/profiles', { params });
+      const resp = await api.get('/api/profiles', { params: cleanParams });
       setProfiles(resp.data.data);
       setPagination({
         total: resp.data.total,

@@ -9,7 +9,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const access_token = request.cookies.get('insighta_access');
   const refresh_token = request.cookies.get('insighta_refresh');
 
   // If no refresh token, redirect to login

@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import { UserCircle, Mail, Shield, Calendar, Fingerprint, Activity } from 'lucide-react';
+import { UserCircle, Shield, Calendar, Fingerprint, Activity } from 'lucide-react';
+
+interface User {
+  id: string;
+  username: string;
+  email?: string;
+  avatar_url?: string;
+  role: string;
+  created_at: string;
+}
 
 export default function AccountPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +41,7 @@ export default function AccountPage() {
           <div className="relative flex justify-between items-end">
             <div className="-mt-16 border-4 border-white rounded-[32px] overflow-hidden shadow-xl bg-white">
               {user?.avatar_url ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img src={user.avatar_url} alt={user.username} className="w-32 h-32 object-cover" />
               ) : (
                 <div className="w-32 h-32 bg-gray-100 flex items-center justify-center text-gray-400">
