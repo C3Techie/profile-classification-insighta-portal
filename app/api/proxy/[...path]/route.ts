@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 
-export async function GET(request: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleRequest(request, params.path.join('/'), 'GET');
+export async function GET(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  const { path } = await params;
+  return handleRequest(request, path.join('/'), 'GET');
 }
 
-export async function POST(request: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleRequest(request, params.path.join('/'), 'POST');
+export async function POST(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  const { path } = await params;
+  return handleRequest(request, path.join('/'), 'POST');
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleRequest(request, params.path.join('/'), 'DELETE');
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  const { path } = await params;
+  return handleRequest(request, path.join('/'), 'DELETE');
 }
 
 async function handleRequest(request: NextRequest, path: string, method: string) {
