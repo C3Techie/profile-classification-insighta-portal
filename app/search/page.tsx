@@ -40,7 +40,7 @@ export default function SearchPage() {
       <div className="text-center space-y-2 py-8">
         <h1 className="text-4xl font-black tracking-tight">Natural Query Engine</h1>
         <p className="text-gray-500 max-w-xl mx-auto">
-          Describe the audience you're looking for using plain English.
+          Describe the audience you&apos;re looking for using plain English.
           Example: <span className="italic">&quot;young females from nigeria&quot;</span> or <span className="italic">&quot;seniors above 70&quot;</span>.
         </p>
       </div>

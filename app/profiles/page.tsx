@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { api } from '@/lib/api';
 import { Filter, ChevronLeft, ChevronRight, Download, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface Profile {
   id: string;
@@ -61,7 +62,12 @@ export default function ProfilesPage() {
   }, [page, filters]);
 
   useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProfiles();
+    }
+    return () => { isMounted = false; };
   }, [fetchProfiles]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
