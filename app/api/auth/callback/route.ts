@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import axios from 'axios';
 
+interface TokenResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const code = searchParams.get('code');
@@ -13,19 +18,21 @@ export async function GET(request: NextRequest) {
 
   try {
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://profile-classification-api.vercel.app';
+    const portalCallbackUrl = `${new URL(request.url).origin}/api/auth/callback`;
     
-    interface TokenResponse {
-      access_token: string;
-      refresh_token: string;
-    }
+    console.log('Exchanging code for tokens...', { portalCallbackUrl });
 
     // 1. Exchange code for tokens via the Backend
     const response = await axios.post<TokenResponse>(`${backendUrl}/auth/github/callback`, {
       code,
       state,
-      redirect_uri: `${new URL(request.url).origin}/api/auth/callback`,
+      redirect_uri: portalCallbackUrl,
+    }).catch(err => {
+      console.error('Backend Exchange Error Detail:', err.response?.data || err.message);
+      throw err;
     });
 
+    console.log('Tokens received successfully');
     const { access_token, refresh_token } = response.data;
 
     // 2. Set HTTP-only cookies on the PORTAL domain
@@ -34,16 +41,16 @@ export async function GET(request: NextRequest) {
     res.cookies.set('insighta_access', access_token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
-      maxAge: 180, // 3 mins
+      sameSite: 'none',
+      maxAge: 180,
       path: '/',
     });
 
     res.cookies.set('insighta_refresh', refresh_token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
-      maxAge: 300, // 5 mins
+      sameSite: 'none',
+      maxAge: 300,
       path: '/',
     });
 

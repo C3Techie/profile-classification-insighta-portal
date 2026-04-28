@@ -98,7 +98,7 @@ export default function DashboardPage() {
             <p className="text-indigo-100 text-sm">Download the latest system report in CSV format for offline analysis.</p>
           </div>
           <a 
-            href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/profiles/export?format=csv`}
+            href={`/api/proxy/api/profiles/export?format=csv`}
             className="mt-8 bg-white text-indigo-600 font-bold py-3 px-4 rounded-xl text-center hover:bg-indigo-50 transition-colors shadow-lg"
           >
             Export All Data
