@@ -48,7 +48,7 @@ export default function ProfilesPage() {
         if (val !== '') cleanParams[key] = val;
       });
       
-      const resp = await api.get('/api/profiles', { params: cleanParams });
+      const resp = await api.get('/api/v1/profiles', { params: cleanParams });
       setProfiles(resp.data.data);
       setPagination({
         total: resp.data.total,
@@ -84,7 +84,7 @@ export default function ProfilesPage() {
         </div>
         <div className="flex items-center gap-3">
           <a 
-            href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/profiles/export?format=csv`}
+            href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/profiles/export?format=csv`}
             className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors shadow-sm"
           >
             <Download size={18} />

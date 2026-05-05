@@ -27,7 +27,7 @@ export default function ProfileDetailPage() {
   useEffect(() => {
     async function fetchProfile() {
       try {
-        const resp = await api.get(`/api/profiles/${id}`);
+        const resp = await api.get(`/api/v1/profiles/${id}`);
         setProfile(resp.data.data);
       } catch (err) {
         console.error(err);

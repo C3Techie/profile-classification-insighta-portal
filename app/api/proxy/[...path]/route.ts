@@ -18,7 +18,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
 async function handleRequest(request: NextRequest, path: string, method: string) {
   const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://profile-classification-api.vercel.app';
-  const access_token = request.cookies.get('insighta_access')?.value;
+  const access_token = request.cookies.get('access_token')?.value;
   
   const searchParams = request.nextUrl.searchParams.toString();
   const fullPath = searchParams ? `${path}?${searchParams}` : path;

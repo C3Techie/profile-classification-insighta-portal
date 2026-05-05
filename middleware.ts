@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const refresh_token = request.cookies.get('insighta_refresh');
+  const refresh_token = request.cookies.get('refresh_token');
 
   // If no refresh token, redirect to login
   if (!refresh_token) {

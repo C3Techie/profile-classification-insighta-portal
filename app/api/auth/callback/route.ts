@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
     // 2. Set HTTP-only cookies on the PORTAL domain
     const res = NextResponse.redirect(new URL('/dashboard', request.url));
     
-    res.cookies.set('insighta_access', access_token, {
+    res.cookies.set('access_token', access_token, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
       path: '/',
     });
 
-    res.cookies.set('insighta_refresh', refresh_token, {
+    res.cookies.set('refresh_token', refresh_token, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',

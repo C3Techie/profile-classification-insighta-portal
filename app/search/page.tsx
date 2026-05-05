@@ -26,7 +26,7 @@ export default function SearchPage() {
     setLoading(true);
     setSearched(true);
     try {
-      const resp = await api.get('/api/profiles/search', { params: { q: query } });
+      const resp = await api.get('/api/v1/profiles/search', { params: { q: query } });
       setResults(resp.data.data);
     } catch (err) {
       console.error(err);

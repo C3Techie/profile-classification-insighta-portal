@@ -17,7 +17,7 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const resp = await api.get('/api/profiles?limit=1');
+        const resp = await api.get('/api/v1/profiles?limit=1');
         setStats({
           total: resp.data.total,
           lastUpdated: new Date().toLocaleTimeString(),
@@ -98,7 +98,7 @@ export default function DashboardPage() {
             <p className="text-indigo-100 text-sm">Download the latest system report in CSV format for offline analysis.</p>
           </div>
           <a 
-            href={`/api/proxy/api/profiles/export?format=csv`}
+            href={`/api/proxy/api/v1/profiles/export?format=csv`}
             className="mt-8 bg-white text-indigo-600 font-bold py-3 px-4 rounded-xl text-center hover:bg-indigo-50 transition-colors shadow-lg"
           >
             Export All Data
